@@ -52,6 +52,49 @@ public class SortingAlgorithm {
         return arr;
     }
 
+    public void merge(int[] arr, int low, int mid, int high){
+        int left = low;
+        int right = mid + 1;
+        int[] temp = new int[(high - low) + 1];
+        int idx = 0;
+
+        while(left<=mid && right<=high){
+            if(arr[left] < arr[right]){
+                temp[idx] = arr[left];
+                idx++; left++;
+            } else {
+                temp[idx] = arr[right];
+                idx++; right++;
+            }
+        }
+
+        while(left<=mid){
+            temp[idx] = arr[left];
+            idx++; left++;
+        }
+
+        while(right<=high){
+            temp[idx] = arr[right];
+            idx++; right++;
+        }
+
+        for (int i=0; i<temp.length; i++){
+            arr[low+i] = temp[i];
+        }
+    }
+
+    public void mergeSort(int[] arr, int low, int high){
+        // Base condition
+        if(low >= high)
+            return;
+        int mid = (low+high)/2;
+
+        mergeSort(arr, low, mid);
+        mergeSort(arr, mid+1, high);
+
+        merge(arr, low, mid, high);
+    }
+
     public void printArray(int[] arr) {
         for (int num : arr) {
             System.out.print(num + " ");
@@ -70,6 +113,7 @@ public class SortingAlgorithm {
                 return;
             }
 
+            System.out.println(String.format("Enter the %d element of an array: ", n));
             int[] arr = new int[n];
             for(int i=0; i<n; i++){
                 arr[i] = scanner.nextInt();
@@ -97,8 +141,10 @@ public class SortingAlgorithm {
                 case 3:
                     //Insertion sort
                     sortingAlgorithm.interstionSort(arr);
+                case 4:
+                    sortingAlgorithm.mergeSort(arr, 0, arr.length - 1);
                 default:
-                    if(sortOption > 4)
+                    if(sortOption >= 4)
                         System.out.println("Invalid option");
             }
 
@@ -108,6 +154,7 @@ public class SortingAlgorithm {
 
         } catch (Exception e) {
             System.out.println("Invalid input. Please enter integers only.");
+            System.out.println(e.toString());
         } finally {
             scanner.close();
         }
