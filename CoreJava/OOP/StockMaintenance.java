@@ -9,7 +9,8 @@ import java.util.Scanner;
  * This Class is to understand the Class and Object
  */
 public class StockMaintenance {
-    public static class Product{
+
+    private static class Product{ //Concrete Class as individal
         private String productID;
         private String productName;
         private String brand;
@@ -117,7 +118,7 @@ public class StockMaintenance {
 
     }
 
-    public static class StockManager<T>{
+    private static class StockManager<T>{ //Staic nested class
         private List<T> products;
 
         public List<T> getProducts() {
